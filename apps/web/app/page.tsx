@@ -1,12 +1,16 @@
-import { prisma } from "@repo/database";
+import { api } from "./trpc/server";
+import CreatePost from "./components/create-post";
 
 export default async function IndexPage() {
-  const users = await prisma.user.findMany();
+  const data = await api.post.all();
 
   return (
-    <div>
-      <h1>Hello World</h1>
-      <pre>{JSON.stringify(users, null, 2)}</pre>
-    </div>
+    <>
+      <div>
+        <h1>Hello World</h1>
+        <pre>{JSON.stringify(data)}</pre>
+      </div>
+      <CreatePost />
+    </>
   );
 }
