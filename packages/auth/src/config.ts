@@ -2,8 +2,6 @@ import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { type DefaultSession, type NextAuthOptions } from "next-auth";
 import { prisma as db } from "@repo/database";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { env } from "../env";
-import { compare } from "bcrypt-ts";
 
 declare module "next-auth" {
   interface Session {
@@ -62,5 +60,5 @@ export const authConfig: NextAuthOptions = {
   session: {
     strategy: "jwt",
   },
-  secret: env.NEXTAUTH_SECRET,
-};
+  secret: process.env.NEXTAUTH_SECRET,
+} satisfies NextAuthOptions;

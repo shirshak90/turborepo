@@ -1,4 +1,5 @@
 import NextAuth from "next-auth";
+import { signIn as signInReact } from "next-auth/react";
 
 import { authConfig } from "./config";
 
@@ -11,4 +12,4 @@ const {
   signOut,
 } = NextAuth(authConfig);
 
-export { GET, POST, auth, signIn, signOut };
+export { GET, POST, auth, signIn, signOut, signInReact };
