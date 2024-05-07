@@ -1,4 +1,4 @@
-import { signIn, signOut, signInReact } from "@repo/auth";
+import { signIn, signOut } from "@repo/auth";
 
 export default async function LoginPage() {
   return (
