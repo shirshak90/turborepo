@@ -1,5 +1,5 @@
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
-import { type DefaultSession, type NextAuthOptions } from "next-auth";
+import { type DefaultSession, type NextAuthConfig } from "next-auth";
 import { prisma as db } from "@repo/database";
 import CredentialsProvider from "next-auth/providers/credentials";
 
@@ -11,7 +11,7 @@ declare module "next-auth" {
   }
 }
 
-export const authConfig: NextAuthOptions = {
+export const authConfig: NextAuthConfig = {
   callbacks: {
     jwt: async ({ token, user }) => {
       user && (token.user = user);
@@ -61,4 +61,4 @@ export const authConfig: NextAuthOptions = {
     strategy: "jwt",
   },
   secret: process.env.NEXTAUTH_SECRET,
-} satisfies NextAuthOptions;
+};
