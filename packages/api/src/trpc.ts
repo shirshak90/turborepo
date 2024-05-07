@@ -11,6 +11,7 @@ import superjson from "superjson";
 import { ZodError } from "zod";
 
 import { prisma as db } from "@repo/database";
+import type { Session } from "@repo/auth";
 
 /**
  * 1. CONTEXT
@@ -26,10 +27,12 @@ import { prisma as db } from "@repo/database";
  */
 export const createTRPCContext = (opts: {
   headers: Headers;
-  session: null;
+  session: Session | null;
 }) => {
   const session = opts.session;
   const source = opts.headers.get("x-trpc-source") ?? "unknown";
+
+  console.log(">>> tRPC Request from", source, "by", session?.user);
 
   return {
     session,
@@ -91,14 +94,13 @@ export const publicProcedure = t.procedure;
  * @see https://trpc.io/docs/procedures
  */
 export const protectedProcedure = t.procedure.use(({ ctx, next }) => {
-  //   if (!ctx.session?.user) {
-  //     throw new TRPCError({ code: "UNAUTHORIZED" });
-  //   }
+  if (!ctx.session?.user) {
+    throw new TRPCError({ code: "UNAUTHORIZED" });
+  }
   return next({
     ctx: {
-      // infers the `session` as non-nullable
-      //   session: { ...ctx.session, user: ctx.session.user },
-      session: null,
+      //  infers the `session` as non-nullable
+      session: { ...ctx.session, user: ctx.session.user },
     },
   });
 });

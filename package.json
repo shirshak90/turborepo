@@ -5,20 +5,24 @@
     "seed": "tsx packages/database/src/seed.ts"
   },
   "scripts": {
-    "build": "turbo run build",
-    "db:migrate:deploy": "turbo run db:migrate:deploy",
-    "db:push": "turbo run db:push",
-    "db:seed": "turbo run db:seed",
-    "dev": "turbo run dev",
+    "build": "dotenv -- turbo run build",
+    "db:migrate:deploy": "dotenv -- turbo run db:migrate:deploy",
+    "db:push": "dotenv -- turbo run db:push",
+    "db:seed": "dotenv -- turbo run db:seed",
+    "dev": "dotenv -- turbo run dev",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "generate": "turbo run generate",
-    "lint": "turbo run lint"
+    "generate": "dotenv -- turbo run generate",
+    "lint": "dotenv -- turbo run lint"
   },
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",
     "prettier": "^3.2.5",
     "tsx": "^4.7.1",
     "turbo": "latest"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "dotenv-cli": "^7.4.1"
   },
   "engines": {
     "node": ">=18"
