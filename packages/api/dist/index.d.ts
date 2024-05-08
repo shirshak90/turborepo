@@ -45,9 +45,13 @@ declare const createCaller: import("@trpc/server/unstable-core-do-not-import").R
                 password: string;
             };
             output: {
-                user: any;
-                token: string;
+                user?: any;
+                token?: any;
             } | null | undefined;
+        }>;
+        test: import("@trpc/server").TRPCMutationProcedure<{
+            input: void;
+            output: never[];
         }>;
     };
 }>;
@@ -67,4 +71,5 @@ type RouterInputs = inferRouterInputs<AppRouter>;
 type RouterOutputs = inferRouterOutputs<AppRouter>;
 export { createTRPCContext, appRouter, createCaller };
 export type { AppRouter, RouterInputs, RouterOutputs };
+export * from "./controller";
 //# sourceMappingURL=index.d.ts.map

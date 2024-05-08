@@ -34,9 +34,13 @@ export declare const appRouter: import("@trpc/server/unstable-core-do-not-import
                 password: string;
             };
             output: {
-                user: any;
-                token: string;
+                user?: any;
+                token?: any;
             } | null | undefined;
+        }>;
+        test: import("@trpc/server").TRPCMutationProcedure<{
+            input: void;
+            output: never[];
         }>;
     };
 }>;

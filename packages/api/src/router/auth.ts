@@ -1,6 +1,6 @@
 import type { TRPCRouterRecord } from "@trpc/server";
 
-import { publicProcedure } from "../trpc";
+import { protectedProcedure, publicProcedure } from "../trpc";
 import { z } from "zod";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt-ts";
@@ -8,6 +8,7 @@ import bcrypt from "bcrypt-ts";
 export const authRouter = {
   login: publicProcedure
     .input(z.object({ email: z.string(), password: z.string() }))
+    .output(z.object({ user: z.any(), token: z.any() }).nullish())
     .mutation(async ({ ctx, input }) => {
       try {
         const user = await ctx.db.user.findUnique({
@@ -34,4 +35,8 @@ export const authRouter = {
         throw new Error("No user found.");
       }
     }),
+  test: protectedProcedure.mutation(() => {
+    console.log("INside procedure");
+    return [];
+  }),
 } satisfies TRPCRouterRecord;

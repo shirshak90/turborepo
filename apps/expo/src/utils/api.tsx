@@ -38,6 +38,11 @@ const getBaseUrl = () => {
   return `http://${localhost}:3000`;
 };
 
+let token: string;
+export const setToken = (newToken: string) => {
+  token = newToken;
+};
+
 /**
  * A wrapper for your app that provides the TRPC context.
  * Use only in _app.tsx
@@ -58,6 +63,7 @@ export function TRPCProvider(props: { children: React.ReactNode }) {
           headers() {
             const headers = new Map<string, string>();
             headers.set("x-trpc-source", "expo-react");
+            headers.set("authorization", `Bearer ${token}`);
             return Object.fromEntries(headers);
           },
         }),

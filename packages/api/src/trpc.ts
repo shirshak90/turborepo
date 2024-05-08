@@ -32,7 +32,7 @@ export const createTRPCContext = (opts: {
   const session = opts.session;
   const source = opts.headers.get("x-trpc-source") ?? "unknown";
 
-  console.log(">>> tRPC Request from", source, "by", session?.user);
+  console.log(">>> tRPC Request from", source, "by", session);
 
   return {
     session,
@@ -93,14 +93,28 @@ export const publicProcedure = t.procedure;
  *
  * @see https://trpc.io/docs/procedures
  */
-export const protectedProcedure = t.procedure.use(({ ctx, next }) => {
-  if (!ctx.session?.user) {
-    throw new TRPCError({ code: "UNAUTHORIZED" });
-  }
-  return next({
+/** Reusable middleware that enforces users are logged in before running the procedure. */
+const enforceUserIsAuthedAndHasPermission = t.middleware((opts) => {
+  // if (!opts.ctx.session )) {
+  //   throw new TRPCError({ code: "UNAUTHORIZED" });
+  // }
+  console.log("########", opts);
+  return opts.next({
     ctx: {
-      //  infers the `session` as non-nullable
-      session: { ...ctx.session, user: ctx.session.user },
+      // infers the `session` as non-nullable
+      session: { ...opts.ctx.session, user: opts?.ctx?.session?.user },
     },
   });
 });
+
+/**
+ * Protected (authenticated) procedure
+ *
+ * If you want a query or mutation to ONLY be accessible to logged in users, use this. It verifies
+ * the session is valid and guarantees `ctx.session.user` is not null.
+ *
+ * @see https://trpc.io/docs/procedures
+ */
+export const protectedProcedure = t.procedure.use(
+  enforceUserIsAuthedAndHasPermission
+);

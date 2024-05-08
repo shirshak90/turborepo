@@ -133,10 +133,10 @@ export declare const protectedProcedure: import("@trpc/server/unstable-core-do-n
     db: any;
 }, object, {
     session: {
-        user: {
+        user: ({
             id: string;
-        } & import("next-auth").User;
-        expires: string;
+        } & import("next-auth").User) | undefined;
+        expires?: string | undefined;
     };
 }, typeof import("@trpc/server/unstable-core-do-not-import").unsetMarker, typeof import("@trpc/server/unstable-core-do-not-import").unsetMarker, typeof import("@trpc/server/unstable-core-do-not-import").unsetMarker, typeof import("@trpc/server/unstable-core-do-not-import").unsetMarker, false>;
 //# sourceMappingURL=trpc.d.ts.map

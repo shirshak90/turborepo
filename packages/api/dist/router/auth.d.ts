@@ -5,9 +5,13 @@ export declare const authRouter: {
             password: string;
         };
         output: {
-            user: any;
-            token: string;
+            user?: any;
+            token?: any;
         } | null | undefined;
+    }>;
+    test: import("@trpc/server").TRPCMutationProcedure<{
+        input: void;
+        output: never[];
     }>;
 };
 //# sourceMappingURL=auth.d.ts.map
