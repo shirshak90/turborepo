@@ -1,6 +1,6 @@
 export declare const appRouter: import("@trpc/server/unstable-core-do-not-import").BuiltRouter<{
     ctx: {
-        session: null;
+        session: import("next-auth").Session | null;
         db: any;
     };
     meta: object;
@@ -25,6 +25,18 @@ export declare const appRouter: import("@trpc/server/unstable-core-do-not-import
         create: import("@trpc/server").TRPCMutationProcedure<{
             input: void;
             output: any;
+        }>;
+    };
+    auth: {
+        login: import("@trpc/server").TRPCMutationProcedure<{
+            input: {
+                email: string;
+                password: string;
+            };
+            output: {
+                user: any;
+                token: string;
+            } | null | undefined;
         }>;
     };
 }>;

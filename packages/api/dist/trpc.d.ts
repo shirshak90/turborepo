@@ -1,3 +1,4 @@
+import type { Session } from "@repo/auth";
 /**
  * 1. CONTEXT
  *
@@ -12,9 +13,9 @@
  */
 export declare const createTRPCContext: (opts: {
     headers: Headers;
-    session: null;
+    session: Session | null;
 }) => {
-    session: null;
+    session: Session | null;
     db: any;
 };
 /**
@@ -23,7 +24,7 @@ export declare const createTRPCContext: (opts: {
  */
 export declare const createCallerFactory: <TRecord extends import("@trpc/server").TRPCRouterRecord>(router: Pick<import("@trpc/server/unstable-core-do-not-import").Router<{
     ctx: {
-        session: null;
+        session: Session | null;
         db: any;
     };
     meta: object;
@@ -41,7 +42,7 @@ export declare const createCallerFactory: <TRecord extends import("@trpc/server"
     transformer: true;
 }, TRecord>, "_def">) => import("@trpc/server/unstable-core-do-not-import").RouterCaller<{
     ctx: {
-        session: null;
+        session: Session | null;
         db: any;
     };
     meta: object;
@@ -71,7 +72,7 @@ export declare const createCallerFactory: <TRecord extends import("@trpc/server"
 export declare const createTRPCRouter: {
     <TInput extends import("@trpc/server").TRPCRouterRecord>(input: TInput): import("@trpc/server/unstable-core-do-not-import").BuiltRouter<{
         ctx: {
-            session: null;
+            session: Session | null;
             db: any;
         };
         meta: object;
@@ -90,7 +91,7 @@ export declare const createTRPCRouter: {
     }, TInput>;
     <TInput_1 extends import("@trpc/server/unstable-core-do-not-import").CreateRouterOptions>(input: TInput_1): import("@trpc/server/unstable-core-do-not-import").BuiltRouter<{
         ctx: {
-            session: null;
+            session: Session | null;
             db: any;
         };
         meta: object;
@@ -116,7 +117,7 @@ export declare const createTRPCRouter: {
  * can still access user session data if they are logged in
  */
 export declare const publicProcedure: import("@trpc/server/unstable-core-do-not-import").ProcedureBuilder<{
-    session: null;
+    session: Session | null;
     db: any;
 }, object, object, typeof import("@trpc/server/unstable-core-do-not-import").unsetMarker, typeof import("@trpc/server/unstable-core-do-not-import").unsetMarker, typeof import("@trpc/server/unstable-core-do-not-import").unsetMarker, typeof import("@trpc/server/unstable-core-do-not-import").unsetMarker, false>;
 /**
@@ -128,9 +129,14 @@ export declare const publicProcedure: import("@trpc/server/unstable-core-do-not-
  * @see https://trpc.io/docs/procedures
  */
 export declare const protectedProcedure: import("@trpc/server/unstable-core-do-not-import").ProcedureBuilder<{
-    session: null;
+    session: Session | null;
     db: any;
 }, object, {
-    session: null;
+    session: {
+        user: {
+            id: string;
+        } & import("next-auth").User;
+        expires: string;
+    };
 }, typeof import("@trpc/server/unstable-core-do-not-import").unsetMarker, typeof import("@trpc/server/unstable-core-do-not-import").unsetMarker, typeof import("@trpc/server/unstable-core-do-not-import").unsetMarker, typeof import("@trpc/server/unstable-core-do-not-import").unsetMarker, false>;
 //# sourceMappingURL=trpc.d.ts.map

@@ -11,7 +11,7 @@ import { createTRPCContext } from "./trpc";
  */
 declare const createCaller: import("@trpc/server/unstable-core-do-not-import").RouterCaller<{
     ctx: {
-        session: null;
+        session: import("next-auth").Session | null;
         db: any;
     };
     meta: object;
@@ -36,6 +36,18 @@ declare const createCaller: import("@trpc/server/unstable-core-do-not-import").R
         create: import("@trpc/server").TRPCMutationProcedure<{
             input: void;
             output: any;
+        }>;
+    };
+    auth: {
+        login: import("@trpc/server").TRPCMutationProcedure<{
+            input: {
+                email: string;
+                password: string;
+            };
+            output: {
+                user: any;
+                token: string;
+            } | null | undefined;
         }>;
     };
 }>;

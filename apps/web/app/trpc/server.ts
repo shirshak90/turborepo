@@ -1,6 +1,7 @@
 import { headers } from "next/headers";
 
 import { createCaller, createTRPCContext } from "@repo/api";
+import { auth } from "@repo/auth";
 
 /**
  * This wraps the `createTRPCContext` helper and provides the required context for the tRPC API when
@@ -11,8 +12,7 @@ const createContext = async () => {
   heads.set("x-trpc-source", "rsc");
 
   return createTRPCContext({
-    // session: await auth(),
-    session: null,
+    session: await auth(),
     headers: heads,
   });
 };
